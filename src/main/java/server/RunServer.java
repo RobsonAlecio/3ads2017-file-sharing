@@ -6,6 +6,14 @@ import java.net.Socket;
 
 public class RunServer {
 
+	
+//	private static class ClasseInterna implements Runnable {
+//
+//		public void run() {
+//		}
+//
+//	}
+
 	public static void main(String[] args) throws IOException {
 		ServerSocket server = new ServerSocket(7082);
 		
@@ -16,6 +24,16 @@ public class RunServer {
 			Thread execucaoTarefa = new Thread(tarefa);
 			
 			execucaoTarefa.start();
+			
+//			Runnable tarefaOnTheFly = new Runnable() {
+//				
+//				public void run() {
+//				}
+//			};
+//			
+//			new Thread(new ClasseInterna());
+//			
+//			new Thread(tarefaOnTheFly);
 		}
 	}
 }

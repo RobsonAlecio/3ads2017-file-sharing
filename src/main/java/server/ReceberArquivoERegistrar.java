@@ -1,11 +1,9 @@
 package server;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ReceberArquivoERegistrar implements Runnable {
 
@@ -20,14 +18,16 @@ public class ReceberArquivoERegistrar implements Runnable {
 			String tamanhoENomeArquivo = receberNomeTamanhoArquivo();
 			String[] info = tamanhoENomeArquivo.split("!");
 			
-			receberArquivo(info);
+			File arquivoRecebido = receberArquivo(info);
+			
+			FileSharingManager.instance().register(conexao, arquivoRecebido);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void receberArquivo(String[] info) throws IOException {
+	private File receberArquivo(String[] info) throws IOException {
 		long tamanhoAReceber = Long.parseLong(info[0]);
 		
 		File file = new File(info[1]);
@@ -42,6 +42,8 @@ public class ReceberArquivoERegistrar implements Runnable {
 		} while (tamanhoAReceber > 0);
 		
 		fos.close();
+		
+		return file;
 	}
 
 	private String receberNomeTamanhoArquivo() throws IOException {
